@@ -1,0 +1,7 @@
+path to php.ini : /etc/php/7.4/apache2
+
+To view apache2 : http://localhost/
+
+To view php : http://localhost/test.php
+
+To view phpmyadmin : http://localhost/phpmyadmin/  

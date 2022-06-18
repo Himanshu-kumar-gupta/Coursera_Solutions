@@ -1,0 +1,61 @@
+CREATE DATABASE Coursera;
+USE Coursera;
+
+CREATE TABLE Account (
+    account_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    email VARCHAR(128) UNIQUE,
+    name VARCHAR(128),
+    PRIMARY KEY(account_id)
+) ENGINE=InnoDB CHARACTER SET=utf8; 
+
+
+CREATE TABLE Course(
+    course_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    title VARCHAR(128) UNIQUE,
+    PRIMARY KEY(course_id)
+) ENGINE=InnoDB CHARACTER SET=utf8;
+
+
+CREATE TABLE Member(
+    account_id INT UNSIGNED,
+    course_id INT UNSIGNED,
+    role INTEGER,
+    
+    CONSTRAINT FOREIGN KEY(account_id) REFERENCES Account(account_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY(course_id) REFERENCES Course(course_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    
+    PRIMARY KEY(account_id,course_id)
+) ENGINE = InnoDB CHARACTER SET=utf8;
+
+
+INSERT INTO Account(name,email) VALUES ('Jane','Jane.org'),
+									('Ed','Ed.org'),
+                                    ('Sue','Sue.org');
+
+
+INSERT INTO Course(title) VALUES ('Python'),
+						('SQL'),
+                        ('php');
+
+
+INSERT INTO Member (account_id,course_id,role) VALUES 
+(1,1,1),
+(2,1,0),
+(3,1,0),
+(1,2,0),
+(2,2,1),
+(2,3,1),
+(3,3,0);
+
+
+SELECT Account.name,Member.role,Course.title
+FROM Account JOIN Member JOIN Course
+ON Member.account_id=Account.account_id AND
+Member.course_id=Course.course_id
+ORDER BY Course.title,Member.role DESC,Account.name;
+
+
+
+
